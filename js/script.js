@@ -1,6 +1,7 @@
 const pokemonName = document.querySelector('.pokemon__name');
 const pokemonNumber = document.querySelector('.pokemon__number');
 const pokemonImage = document.querySelector('.pokemon__image');
+const pokemonData = document.querySelector('.pokemon__data');
 
 const form = document.querySelector('.form');
 const input = document.querySelector('.input__search');
@@ -27,8 +28,32 @@ const renderPokemon = async (pokemon) => {
   if (data) {
     pokemonImage.style.display = 'block';
     pokemonName.innerHTML = data.name;
+
+    data.name.toString();
+
+    var tamanho = data.name.toString().length + data.id.toString().length;
+    if (tamanho > 17) {
+      pokemonData.style.fontSize = 'clamp(6px, 4vw, 20px)';
+    } else {
+      pokemonData.style.fontSize = 'clamp(8px, 5vw, 25px)';
+    } // Pokemons com nomes grandes não quebram mais o layout
+
     pokemonNumber.innerHTML = data.id;
-    pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+
+    if (data.id >= 650) {
+      pokemonImage.src = data['sprites']['versions']['generation-viii']['icons']['front_default'];
+      pokemonImage.style.height = '35%';
+      pokemonImage.style.left = '55%';
+      pokemonImage.style.bottom = '57%';
+    } else {
+      pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+      pokemonImage.style.height = '18%';
+      pokemonImage.style.left = '50%';
+      pokemonImage.style.bottom = '55%';
+      pokemonImage.style.transform = 'translate(-63%, 20%)';
+      pokemonImage.style.position = 'absolute';
+    } // Pokemons sem fotos animadas 
+    
 
     input.value = '';
     searchPokemon = data.id;
